@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Customer from './components/playlist'
 import './App.css';
+
+import Paper from '@material-ui/core/Paper';
+
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
@@ -19,39 +22,29 @@ const styles = theme => ({
   }
 });
 
-
-const customers = [
-  {
-    'id': 1,
-    'image': 'https://placeimg.com/64/64/1',
-    'name': '오왼 - Buddy (Feat. pH-1)',
-    'birthday': 'https://www.youtube.com/watch?v=HGrP1qdE5Rw&t=237s',
-    'gender': '🌞 화창한 날, 산책하면서 듣기 좋은 노래 모음  PLAYLIST',
-    'job': '찐막 JJINMAK'
-  },
-  {
-    'id': 2,
-    'image': 'https://placeimg.com/64/64/2',
-    'name': 'SOLE - haPPiness',
-    'birthday': 'https://www.youtube.com/watch?v=HGrP1qdE5Rw&t=441s',
-    'gender': '🌞 화창한 날, 산책하면서 듣기 좋은 노래 모음  PLAYLIST',
-    'job': '찐막 JJINMAK'
-  },
-  {
-    'id': 3,
-    'image': 'https://placeimg.com/64/64/3',
-    'name': '권진아 - Fy Away',
-    'birthday': 'https://www.youtube.com/watch?v=HGrP1qdE5Rw&t=653s',
-    'gender': '🌞 화창한 날, 산책하면서 듣기 좋은 노래 모음  PLAYLIST',
-    'job': '찐막 JJINMAK'
-  }
-]
-
 class App extends Component {
+  state = {
+    customers: ''
+  }
+
+  componentDidMount() {
+    this.callApi()
+      .then(res => this.setState({ customers: res }))
+      .catch(err => console.log(err));
+  }
+
+  callApi = async () => {
+    const response = await fetch('/api/customers');
+    const body = await response.json();
+    return body;
+  }
+
   render() {
+    const { classes } = this.props;
+
     return (
-      <div>
-        <Table>
+      <Paper className={classes.root}>
+        <Table className={classes.table}>
           <TableHead>
             <TableRow>
               <TableCell>번호</TableCell>
@@ -63,12 +56,12 @@ class App extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {customers.map(c => {
+            {this.state.customers ? this.state.customers.map(c => {
               return <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} />
-            })}
+            }) : ''}
           </TableBody>
         </Table>
-      </div>
+      </Paper>
     );
   }
 }
