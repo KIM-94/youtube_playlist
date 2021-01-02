@@ -8,10 +8,10 @@ class playlist extends React.Component {
             <TableRow>
                 <TableCell>{this.props.id}</TableCell>
                 <TableCell><img src={this.props.image} alt="profile" /></TableCell>
-                <TableCell>{this.props.name}</TableCell>
-                <TableCell><a class="yt-simple-endpoint style-scope yt-formatted-string" spellcheck="false" href={this.props.birthday} dir="auto">{this.props.birthday}</a></TableCell>
-                <TableCell>{this.props.gender}</TableCell>
-                <TableCell>{this.props.job}</TableCell>
+                <TableCell>{this.props.titleANDartist}</TableCell>
+                <TableCell><a class="yt-simple-endpoint style-scope yt-formatted-string" spellcheck="false" href={this.props.link} dir="auto">{this.props.link}</a></TableCell>
+                <TableCell>{this.props.playlistTitle}</TableCell>
+                <TableCell>{this.props.channelTitle}</TableCell>
             </TableRow>
         )
     }
